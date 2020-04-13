@@ -20,7 +20,7 @@ endif
 endif
 
 # Resulting ELF and binary exectuables will be named demo and demo.bin
-extra-y = demo
+extra-y = demo demo.bin
 
 # Source files located in the examples/api directory
 OBJ-y += crt0.o
@@ -56,7 +56,6 @@ cmd_link_demo = $(LD) --gc-sections -Ttext $(LOAD_ADDR) -o $@ $(filter-out $(PHO
 $(obj)/demo: $(OBJS) FORCE
 	$(call if_changed,link_demo)
 
-# demo.bin is never genrated. Is this necessary?
 OBJCOPYFLAGS_demo.bin := -O binary
 $(obj)/demo.bin: $(obj)/demo FORCE
 	$(call if_changed,objcopy)
