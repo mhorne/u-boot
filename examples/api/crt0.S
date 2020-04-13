@@ -62,12 +62,14 @@ syscall:
 	.end syscall
 
 return_addr:
+	.data
 	.align 8
 	.long 0
 #else
 #error No support for this arch!
 #endif
 
+	.data
 	.globl syscall_ptr
 syscall_ptr:
 	.align	8

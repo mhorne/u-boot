@@ -48,10 +48,12 @@ OBJS := $(OBJ-y) $(notdir $(EXT_COBJ-y) $(EXT_SOBJ-y))
 targets += $(OBJS)
 OBJS := $(addprefix $(obj)/,$(OBJS))
 
+LDS = $(obj)/demo.lds
 #########################################################################
 
 quiet_cmd_link_demo = LD      $@
-cmd_link_demo = $(LD) --gc-sections -Ttext $(LOAD_ADDR) -o $@ $(filter-out $(PHONY), $^) $(PLATFORM_LIBS)
+cmd_link_demo = $(LD) --gc-sections -Ttext $(LOAD_ADDR) -T $(LDS) \
+	-o $@ $(filter-out $(PHONY), $^) $(PLATFORM_LIBS)
 
 $(obj)/demo: $(OBJS) FORCE
 	$(call if_changed,link_demo)
