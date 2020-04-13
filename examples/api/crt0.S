@@ -42,12 +42,12 @@ syscall:
 #elif defined(CONFIG_MIPS)
 #include <asm/asm.h>
 	.text
-	.globl __start
-	.ent __start
-__start:
+	.globl _start
+	.ent _start
+_start:
 	PTR_S	$sp, search_hint
 	b	main
-	.end __start
+	.end _start
 
 	.globl syscall
 	.ent syscall
