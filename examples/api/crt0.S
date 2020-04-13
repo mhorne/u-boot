@@ -65,6 +65,21 @@ return_addr:
 	.data
 	.align 8
 	.long 0
+
+#elif defined(CONFIG_RISCV)
+#include <asm/asm.h>
+	.text
+	.globl _start
+_start:
+	lla	t0, search_hint
+	REG_S	sp, 0(t0)
+	tail	main
+
+	.globl syscall
+syscall:
+	lla	t0, syscall_ptr
+	REG_L	t2, 0(t0)
+	jr	t2
 #else
 #error No support for this arch!
 #endif
