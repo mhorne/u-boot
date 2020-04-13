@@ -30,7 +30,8 @@
 #define ENUM_SCSI	2
 #define ENUM_MMC	3
 #define ENUM_SATA	4
-#define ENUM_MAX	5
+#define ENUM_VIRTIO	5
+#define ENUM_MAX	6
 
 struct stor_spec {
 	int		max_dev;
@@ -44,6 +45,10 @@ static struct stor_spec specs[ENUM_MAX] = { { 0, 0, 0, 0, NULL }, };
 
 #ifndef CONFIG_SYS_MMC_MAX_DEVICE
 #define CONFIG_SYS_MMC_MAX_DEVICE	1
+#endif
+
+#ifndef CONFIG_SYS_VIRTIO_BLK_MAX_DEVICE
+#define CONFIG_SYS_VIRTIO_BLK_MAX_DEVICE	1
 #endif
 
 void dev_stor_init(void)
@@ -82,6 +87,13 @@ void dev_stor_init(void)
 	specs[ENUM_USB].enum_ended = 0;
 	specs[ENUM_USB].type = DEV_TYP_STOR | DT_STOR_USB;
 	specs[ENUM_USB].name = "usb";
+#endif
+#if defined(CONFIG_VIRTIO_BLK)
+	specs[ENUM_VIRTIO].max_dev = CONFIG_SYS_VIRTIO_BLK_MAX_DEVICE;
+	specs[ENUM_VIRTIO].enum_started = 0;
+	specs[ENUM_VIRTIO].enum_ended = 0;
+	specs[ENUM_VIRTIO].type = DEV_TYP_STOR | DT_STOR_VIRTIO;
+	specs[ENUM_VIRTIO].name = "virtio";
 #endif
 }
 
